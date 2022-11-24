@@ -19,3 +19,12 @@ class UserDisplay(BaseModel):
     email: str
     class Config():
         orm_mode = True
+
+class UserIsAdmin(BaseModel):
+    email: int
+    password: str
+
+class UserAuth(BaseModel):
+    id: int
+    username: str
+    email: str
