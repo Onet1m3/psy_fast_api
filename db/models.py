@@ -12,20 +12,25 @@ class DbUser(Base):
     is_admin = Column(Boolean, default=False)
 
 
-class PostCategory(Base):
+class DbPostCategory(Base):
     __tablename__ = "post_category"
     id = Column(Integer, primary_key=True)
     section = Column(String, unique=True)
     is_activ = Column(Boolean, default=True)
+    category = relationship("DbPost", back_populates="post_category")
+
+    def __str__(self) -> str:
+        return f"{self.section}"
 
 
-class Post(Base):
+class DbPost(Base):
     __tablename__="post"
     id = Column(Integer, primary_key=True)
-#     subject = models.ForeignKey(PostCategory, on_delete=models.CASCADE, verbose_name='Выбор раздела', related_name='baner')
-    title = Column(String, unique=True)
-#     image = models.ImageField("Баннер", upload_to='img/banner', null=True, blank=True)
+    title = Column(String, unique=True, nullable=False)
+    image =  Column(String, nullable=True)
     is_activ = Column(Boolean, default=True)
     text = Column(Text)
     created_at = Column(DateTime)
-#     slug = models.SlugField('URL', max_length=50, default="diary")
+    post_category_id = Column(Integer, ForeignKey("post_category.id"))
+    post_category = relationship("DbPostCategory", back_populates="category")
+    # slug = Column(String, nullable=True)
