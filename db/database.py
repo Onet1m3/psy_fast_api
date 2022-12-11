@@ -25,9 +25,3 @@ class MySuperContextManager:
 async def get_db():
     with MySuperContextManager() as db:
         yield db
-# def get_db():
-#     db = SessionLocal()
-#     try:
-#         yield db
-#     finally:
-#         db.close()
